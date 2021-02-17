@@ -16,6 +16,12 @@ public:
     ~MainWindow();
 
 private slots:
+    void on_rbtn_is_multi_toggled(bool checked);
+
+private slots:
+    void on_btn_input_pressed();
+
+private slots:
     void on_chkbox_clust_stateChanged(int arg1);
 
 private slots:
@@ -26,5 +32,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+
+    const QString default_directory_, default_pcd_file_;
+
+    void SetDirectories();
 };
 #endif // MAINWINDOW_H
