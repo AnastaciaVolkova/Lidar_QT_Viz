@@ -33,9 +33,9 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>150</y>
+          <y>30</y>
           <width>941</width>
-          <height>541</height>
+          <height>791</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="vlay_ctrl">
@@ -78,6 +78,9 @@
                <property name="text">
                 <string>Process multiple files</string>
                </property>
+               <property name="checked">
+                <bool>false</bool>
+               </property>
               </widget>
              </item>
              <item row="0" column="0">
@@ -109,9 +112,9 @@
             <property name="geometry">
              <rect>
               <x>10</x>
-              <y>30</y>
+              <y>50</y>
               <width>921</width>
-              <height>221</height>
+              <height>281</height>
              </rect>
             </property>
             <layout class="QHBoxLayout" name="h_lay_stages">
@@ -132,7 +135,7 @@
                   <x>20</x>
                   <y>40</y>
                   <width>261</width>
-                  <height>161</height>
+                  <height>198</height>
                  </rect>
                 </property>
                 <layout class="QVBoxLayout" name="v_lay_stages">
@@ -141,12 +144,21 @@
                    <property name="text">
                     <string>Filter</string>
                    </property>
+                   <property name="checkable">
+                    <bool>true</bool>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="QCheckBox" name="chkbox_seg">
                    <property name="text">
                     <string>Segmentation</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -155,12 +167,18 @@
                    <property name="text">
                     <string>Clustering</string>
                    </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                  <item>
                   <widget class="QCheckBox" name="chkbox_box">
                    <property name="text">
                     <string>Boxing</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -193,6 +211,9 @@
                   <widget class="QRadioButton" name="rbtn_seg_pcl">
                    <property name="text">
                     <string>PCL</string>
+                   </property>
+                   <property name="checked">
+                    <bool>true</bool>
                    </property>
                   </widget>
                  </item>
@@ -233,6 +254,9 @@
                    <property name="text">
                     <string>PCL</string>
                    </property>
+                   <property name="checked">
+                    <bool>true</bool>
+                   </property>
                   </widget>
                  </item>
                  <item>
@@ -263,7 +287,7 @@
      <x>0</x>
      <y>0</y>
      <width>2000</width>
-     <height>22</height>
+     <height>39</height>
     </rect>
    </property>
   </widget>
