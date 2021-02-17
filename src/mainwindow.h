@@ -15,6 +15,15 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_chkbox_clust_stateChanged(int arg1);
+
+private slots:
+    void on_chkbox_seg_stateChanged(int arg1);
+
+private slots:
+    void on_chkbox_filter_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
 };
