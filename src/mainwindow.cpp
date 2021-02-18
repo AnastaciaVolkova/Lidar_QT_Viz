@@ -22,7 +22,6 @@ MainWindow::MainWindow(QWidget *parent)
     SetDirectories();
 
     vtkNew<vtkOpenGLRenderer> r;
-    vtkNew<vtkGenericOpenGLRenderWindow> rw;
 
     pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
 
@@ -31,7 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     std::string name("my cloud");
     pcl::visualization::PointCloudColorHandlerGenericField<PointXYZI> int_dist(cloud_, "intensity");
 
-    //ui->vtk_widget->setRenderWindow(pcl_viewer_->getRenderWindow());
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
 
