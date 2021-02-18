@@ -2,7 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <memory>
 #include <pcl/visualization/pcl_visualizer.h>
+#include "processPointClouds.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -40,5 +42,6 @@ private:
 
     pcl::visualization::PCLVisualizer::Ptr pcl_viewer_;
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
+    std::unique_ptr<ProcessPointClouds<pcl::PointXYZI>> pcl_processor;
 };
 #endif // MAINWINDOW_H
