@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <pcl/visualization/pcl_visualizer.h>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -36,5 +37,8 @@ private:
     const QString default_directory_, default_pcd_file_;
 
     void SetDirectories();
+
+    pcl::visualization::PCLVisualizer::Ptr pcl_viewer_;
+    pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
 };
 #endif // MAINWINDOW_H

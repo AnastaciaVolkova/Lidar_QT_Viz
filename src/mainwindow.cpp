@@ -4,15 +4,39 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QFileInfo>
+#include <pcl/io/pcd_io.h>
+#include <vtkGenericOpenGLRenderWindow.h>
+#include <vtkOpenGLRenderer.h>
+
+using namespace pcl;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , default_directory_("../data/pcd/data_1")
     , default_pcd_file_("../src/simpleHighway.pcd")
+    , cloud_(new pcl::PointCloud<pcl::PointXYZI>)
 {
     ui->setupUi(this);
     SetDirectories();
+
+    vtkNew<vtkOpenGLRenderer> r;
+    vtkNew<vtkGenericOpenGLRenderWindow> rw;
+
+    pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
+
+    pcl::io::loadPCDFile<PointXYZI>(ui->le_input->text().toStdString(), *cloud_);
+    std::string name("my cloud");
+    pcl::visualization::PointCloudColorHandlerGenericField<PointXYZI> int_dist(cloud_, "intensity");
+
+    //ui->vtk_widget->setRenderWindow(pcl_viewer_->getRenderWindow());
+    pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
+    ui->vtk_widget->update();
+
+    pcl_viewer_->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, 1, 1, 1, name);
+    pcl_viewer_->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 4, name);
+    pcl_viewer_->addPointCloud<PointXYZI>(cloud_, int_dist, name);
+    qDebug("Constructor finish");
 }
 
 MainWindow::~MainWindow()

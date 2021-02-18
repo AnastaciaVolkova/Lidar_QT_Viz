@@ -25,7 +25,7 @@
     </property>
     <layout class="QHBoxLayout" name="hlay_main">
      <item>
-      <widget class="QOpenGLWidget" name="openGLWidget"/>
+      <widget class="QVTKRenderWidget" name="vtk_widget" native="true"/>
      </item>
      <item>
       <widget class="QWidget" name="cntrl_widg" native="true">
@@ -296,6 +296,15 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+
+ <customwidgets>
+  <customwidget>
+   <class>QVTKRenderWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKRenderWidget.h</header>
+  </customwidget>
+ </customwidgets>gc
+
  <resources/>
  <connections/>
 </ui>
