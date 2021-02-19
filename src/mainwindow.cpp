@@ -20,7 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-
     SetDirectories();
 
     QDir cur = QDir(QCoreApplication::applicationDirPath());
@@ -106,6 +105,7 @@ void MainWindow::on_btn_input_pressed()
         ui->le_input->setText(directory);
     }
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
+
     renderPointCloud(ui->le_input->text().toStdString());
 }
 
@@ -134,3 +134,11 @@ void MainWindow::renderPointCloud(string name){
     pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
     pcl_viewer_->spin();
 };
+
+void MainWindow::on_rbtn_show_intensity_toggled(bool checked)
+{
+    if (checked)
+        renderPointCloud(ui->le_input->text().toStdString());
+    else
+        renderPointCloud({0,1,0}, ui->le_input->text().toStdString());
+}

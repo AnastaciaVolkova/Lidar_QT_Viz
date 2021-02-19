@@ -36,6 +36,8 @@ private slots:
 private slots:
     void on_chkbox_filter_stateChanged(int arg1);
 
+    void on_rbtn_show_intensity_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
 
