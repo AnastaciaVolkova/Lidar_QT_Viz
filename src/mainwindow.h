@@ -40,7 +40,6 @@ private:
     Ui::MainWindow *ui;
 
     const QString default_directory_, default_pcd_file_;
-    const std::string kCloud_name_;
 
     void SetDirectories();
 
@@ -48,7 +47,7 @@ private:
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
     std::unique_ptr<ProcessPointClouds<pcl::PointXYZI>> pcl_processor;
 
-    void renderPointCloud(Color color);
-    void renderPointCloud();
+    void renderPointCloud(Color color, std::string name);
+    void renderPointCloud(std::string name);
 };
 #endif // MAINWINDOW_H

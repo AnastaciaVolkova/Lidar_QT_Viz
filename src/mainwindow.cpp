@@ -14,25 +14,25 @@ using namespace std;
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
-    , default_directory_("../data/pcd/data_1")
-    , default_pcd_file_("../src/simpleHighway.pcd")
+    , default_directory_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../data/pcd/data_1/"))
+    , default_pcd_file_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../src/simpleHighway.pcd"))
     , cloud_(new pcl::PointCloud<pcl::PointXYZI>)
-    , kCloud_name_("my cloud")
 {
     ui->setupUi(this);
+
+
     SetDirectories();
+
+    QDir cur = QDir(QCoreApplication::applicationDirPath());
 
     vtkNew<vtkOpenGLRenderer> r;
 
     pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
 
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
-
-    pcl::visualization::PointCloudColorHandlerGenericField<PointXYZI> int_dist(cloud_, "intensity");
-
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
-    renderPointCloud();
+    renderPointCloud(ui->le_input->text().toStdString());
 }
 
 MainWindow::~MainWindow()
@@ -105,6 +105,8 @@ void MainWindow::on_btn_input_pressed()
                                                               QFileDialog::ShowDirsOnly);
         ui->le_input->setText(directory);
     }
+    cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
+    renderPointCloud(ui->le_input->text().toStdString());
 }
 
 void MainWindow::on_rbtn_is_multi_toggled(bool checked)
@@ -116,15 +118,19 @@ void MainWindow::on_rbtn_is_multi_toggled(bool checked)
 }
 
 
-void MainWindow::renderPointCloud(Color color){
-    pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, kCloud_name_);
-    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, kCloud_name_);
-    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, kCloud_name_);
+void MainWindow::renderPointCloud(Color color, string name){
+    pcl_viewer_->removeAllPointClouds();
+    pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, name);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
+    pcl_viewer_->spin();
 };
 
 
-void MainWindow::renderPointCloud(){
+void MainWindow::renderPointCloud(string name){
+    pcl_viewer_->removeAllPointClouds();
     pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZI> intensity_distribution(cloud_,"intensity");
-    pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, kCloud_name_);
-    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, kCloud_name_);
+    pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, name);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
+    pcl_viewer_->spin();
 };
