@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     , default_directory_("../data/pcd/data_1")
     , default_pcd_file_("../src/simpleHighway.pcd")
     , cloud_(new pcl::PointCloud<pcl::PointXYZI>)
+    , kCloud_name_("my cloud")
 {
     ui->setupUi(this);
     SetDirectories();
@@ -27,15 +28,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
 
-    std::string name("my cloud");
     pcl::visualization::PointCloudColorHandlerGenericField<PointXYZI> int_dist(cloud_, "intensity");
 
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
-
-    pcl_viewer_->addPointCloud<PointXYZI>(cloud_, int_dist, name);
-    pcl_viewer_->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, 1, 1, 1, name);
-    pcl_viewer_->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 4, name);
+    renderPointCloud();
 }
 
 MainWindow::~MainWindow()
@@ -117,3 +114,17 @@ void MainWindow::on_rbtn_is_multi_toggled(bool checked)
     else
         ui->le_input->setText(default_pcd_file_);
 }
+
+
+void MainWindow::renderPointCloud(Color color){
+    pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, kCloud_name_);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, kCloud_name_);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, kCloud_name_);
+};
+
+
+void MainWindow::renderPointCloud(){
+    pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZI> intensity_distribution(cloud_,"intensity");
+    pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, kCloud_name_);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, kCloud_name_);
+};

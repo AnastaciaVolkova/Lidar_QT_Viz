@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <memory>
+#include <string>
 #include <pcl/visualization/pcl_visualizer.h>
 #include "processPointClouds.h"
 
@@ -13,6 +14,8 @@ QT_END_NAMESPACE
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
+
+struct Color{float r, g, b; };
 
 public:
     MainWindow(QWidget *parent = nullptr);
@@ -37,11 +40,15 @@ private:
     Ui::MainWindow *ui;
 
     const QString default_directory_, default_pcd_file_;
+    const std::string kCloud_name_;
 
     void SetDirectories();
 
     pcl::visualization::PCLVisualizer::Ptr pcl_viewer_;
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
     std::unique_ptr<ProcessPointClouds<pcl::PointXYZI>> pcl_processor;
+
+    void renderPointCloud(Color color);
+    void renderPointCloud();
 };
 #endif // MAINWINDOW_H
