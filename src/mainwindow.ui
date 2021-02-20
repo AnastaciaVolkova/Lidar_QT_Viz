@@ -14,289 +14,283 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="cent_widg">
-   <widget class="QWidget" name="horizontalLayoutWidget">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>1971</width>
-      <height>931</height>
-     </rect>
-    </property>
-    <layout class="QHBoxLayout" name="hlay_main">
-     <item>
-      <widget class="QVTKRenderWidget" name="vtk_widget" native="true"/>
-     </item>
-     <item>
-      <widget class="QWidget" name="cntrl_widg" native="true">
-       <widget class="QWidget" name="verticalLayoutWidget">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>30</y>
-          <width>941</width>
-          <height>791</height>
-         </rect>
-        </property>
-        <layout class="QVBoxLayout" name="vlay_ctrl">
-         <item>
-          <layout class="QGridLayout" name="gridLayout">
-           <item row="4" column="0">
-            <widget class="QRadioButton" name="rbtn_is_multi">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Process multiple files</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="lbl_input">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Input</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLineEdit" name="le_input">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="QPushButton" name="btn_input">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Open</string>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="1">
-            <widget class="QCheckBox" name="chkbox_show_intensity">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="text">
-              <string>Use Intensity</string>
-             </property>
-             <property name="checked">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
-          <widget class="QGroupBox" name="grpbox_proc_stages">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="title">
-            <string>Point cloud processing stages</string>
-           </property>
-           <widget class="QWidget" name="horizontalLayoutWidget_3">
-            <property name="geometry">
-             <rect>
-              <x>10</x>
-              <y>50</y>
-              <width>921</width>
-              <height>281</height>
-             </rect>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="0" column="0">
+     <layout class="QHBoxLayout" name="hlay_main">
+      <item>
+       <widget class="QVTKRenderWidget" name="vtk_widget" native="true"/>
+      </item>
+      <item>
+       <widget class="QWidget" name="cntrl_widg" native="true">
+        <widget class="QWidget" name="verticalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>20</x>
+           <y>30</y>
+           <width>941</width>
+           <height>791</height>
+          </rect>
+         </property>
+         <layout class="QVBoxLayout" name="vlay_ctrl">
+          <item>
+           <layout class="QGridLayout" name="gridLayout">
+            <item row="4" column="0">
+             <widget class="QRadioButton" name="rbtn_is_multi">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Process multiple files</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QLabel" name="lbl_input">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Input</string>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="0">
+             <widget class="QLineEdit" name="le_input">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QPushButton" name="btn_input">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Open</string>
+              </property>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QCheckBox" name="chkbox_show_intensity">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Use Intensity</string>
+              </property>
+              <property name="checked">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <widget class="QGroupBox" name="grpbox_proc_stages">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <layout class="QHBoxLayout" name="h_lay_stages">
-             <item>
-              <widget class="QGroupBox" name="grpbox_stages">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Stages</string>
-               </property>
-               <widget class="QWidget" name="verticalLayoutWidget_2">
-                <property name="geometry">
-                 <rect>
-                  <x>20</x>
-                  <y>40</y>
-                  <width>261</width>
-                  <height>198</height>
-                 </rect>
+            <property name="title">
+             <string>Point cloud processing stages</string>
+            </property>
+            <widget class="QWidget" name="horizontalLayoutWidget_3">
+             <property name="geometry">
+              <rect>
+               <x>10</x>
+               <y>50</y>
+               <width>921</width>
+               <height>281</height>
+              </rect>
+             </property>
+             <layout class="QHBoxLayout" name="h_lay_stages">
+              <item>
+               <widget class="QGroupBox" name="grpbox_stages">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <layout class="QVBoxLayout" name="v_lay_stages">
-                 <item>
-                  <widget class="QCheckBox" name="chkbox_filter">
-                   <property name="text">
-                    <string>Filter</string>
-                   </property>
-                   <property name="checkable">
-                    <bool>true</bool>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="chkbox_seg">
-                   <property name="text">
-                    <string>Segmentation</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="chkbox_clust">
-                   <property name="text">
-                    <string>Clustering</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QCheckBox" name="chkbox_box">
-                   <property name="text">
-                    <string>Boxing</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
-               </widget>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="grpbox_seg">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Segmentation Method</string>
-               </property>
-               <widget class="QWidget" name="verticalLayoutWidget_3">
-                <property name="geometry">
-                 <rect>
-                  <x>20</x>
-                  <y>40</y>
-                  <width>261</width>
-                  <height>161</height>
-                 </rect>
+                <property name="title">
+                 <string>Stages</string>
                 </property>
-                <layout class="QVBoxLayout" name="v_lay_seg">
-                 <item>
-                  <widget class="QRadioButton" name="rbtn_seg_pcl">
-                   <property name="text">
-                    <string>PCL</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="tbtn_seg_my">
-                   <property name="text">
-                    <string>Custom</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <widget class="QWidget" name="verticalLayoutWidget_2">
+                 <property name="geometry">
+                  <rect>
+                   <x>20</x>
+                   <y>40</y>
+                   <width>261</width>
+                   <height>198</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="v_lay_stages">
+                  <item>
+                   <widget class="QCheckBox" name="chkbox_filter">
+                    <property name="text">
+                     <string>Filter</string>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="chkbox_seg">
+                    <property name="text">
+                     <string>Segmentation</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="chkbox_clust">
+                    <property name="text">
+                     <string>Clustering</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="chkbox_box">
+                    <property name="text">
+                     <string>Boxing</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
-              </widget>
-             </item>
-             <item>
-              <widget class="QGroupBox" name="grpbox_cls">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="title">
-                <string>Clustering Method</string>
-               </property>
-               <widget class="QWidget" name="verticalLayoutWidget_4">
-                <property name="geometry">
-                 <rect>
-                  <x>19</x>
-                  <y>39</y>
-                  <width>261</width>
-                  <height>161</height>
-                 </rect>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="grpbox_seg">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <layout class="QVBoxLayout" name="v_lay_clust">
-                 <item>
-                  <widget class="QRadioButton" name="rbtn_clust_pcl">
-                   <property name="text">
-                    <string>PCL</string>
-                   </property>
-                   <property name="checked">
-                    <bool>true</bool>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QRadioButton" name="rbtn_clust_my">
-                   <property name="text">
-                    <string>Custom</string>
-                   </property>
-                  </widget>
-                 </item>
-                </layout>
+                <property name="title">
+                 <string>Segmentation Method</string>
+                </property>
+                <widget class="QWidget" name="verticalLayoutWidget_3">
+                 <property name="geometry">
+                  <rect>
+                   <x>20</x>
+                   <y>40</y>
+                   <width>261</width>
+                   <height>161</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="v_lay_seg">
+                  <item>
+                   <widget class="QRadioButton" name="rbtn_seg_pcl">
+                    <property name="text">
+                     <string>PCL</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="tbtn_seg_my">
+                    <property name="text">
+                     <string>Custom</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
-              </widget>
-             </item>
-            </layout>
+              </item>
+              <item>
+               <widget class="QGroupBox" name="grpbox_cls">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="title">
+                 <string>Clustering Method</string>
+                </property>
+                <widget class="QWidget" name="verticalLayoutWidget_4">
+                 <property name="geometry">
+                  <rect>
+                   <x>19</x>
+                   <y>39</y>
+                   <width>261</width>
+                   <height>161</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="v_lay_clust">
+                  <item>
+                   <widget class="QRadioButton" name="rbtn_clust_pcl">
+                    <property name="text">
+                     <string>PCL</string>
+                    </property>
+                    <property name="checked">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QRadioButton" name="rbtn_clust_my">
+                    <property name="text">
+                     <string>Custom</string>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </widget>
-          </widget>
-         </item>
-        </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
-      </widget>
-     </item>
-    </layout>
-   </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -304,7 +298,7 @@
      <x>0</x>
      <y>0</y>
      <width>2000</width>
-     <height>39</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
