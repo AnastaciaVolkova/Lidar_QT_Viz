@@ -139,6 +139,24 @@ void MainWindow::renderPointCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, st
     pcl_viewer_->spin();
 };
 
+void MainWindow::renderBox(Box& box, string name, Color color, float opacity)
+{
+	if(opacity > 1.0)
+		opacity = 1.0;
+	if(opacity < 0.0)
+		opacity = 0.0;
+
+    pcl_viewer_->addCube(box.x_min, box.x_max, box.y_min, box.y_max, box.z_min, box.z_max, color.r, color.g, color.b, name);
+    pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_REPRESENTATION, pcl::visualization::PCL_VISUALIZER_REPRESENTATION_WIREFRAME, name);
+    pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
+    pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, opacity, name);
+
+    pcl_viewer_->addCube(box.x_min, box.x_max, box.y_min, box.y_max, box.z_min, box.z_max, color.r, color.g, color.b, name + "_fill");
+    pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_REPRESENTATION, pcl::visualization::PCL_VISUALIZER_REPRESENTATION_SURFACE, name);
+    pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
+    pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_OPACITY, opacity*0.3, name);
+};
+
 void MainWindow::ProcessChain(){
     std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> seg_res;
 
@@ -173,9 +191,10 @@ void MainWindow::ProcessChain(){
                 cluster,
                 ui->le_input->text().toStdString()+std::to_string(clusterId),
                 colors[clusterId%colors.size()]);
-            // Box box = point_processor->BoundingBox(cluster);
-            // if (to_stop !="clust")
-            //     renderBox(viewer,box,clusterId);
+            if (ui->chkbox_box->isChecked()){
+                Box box = pcl_processor->BoundingBox(cluster);
+                renderBox(box,"Box"+to_string(clusterId));
+            }
             ++clusterId;
         }
     }
