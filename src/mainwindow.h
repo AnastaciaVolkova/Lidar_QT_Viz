@@ -33,16 +33,16 @@ private slots:
     void on_chkbox_show_intensity_stateChanged(int arg1);
 
 private slots:
-    void on_chkbox_box_stateChanged(int arg1);
+    void on_chkbox_seg_stateChanged(int arg1);
 
 private slots:
     void on_chkbox_clust_stateChanged(int arg1);
 
 private slots:
-    void on_chkbox_seg_stateChanged(int arg1);
+    void on_chkbox_filter_stateChanged(int arg1);
 
 private slots:
-    void on_chkbox_filter_stateChanged(int arg1);
+    void on_chkbox_box_stateChanged(int arg1);
 
 private:
     Ui::MainWindow *ui;
