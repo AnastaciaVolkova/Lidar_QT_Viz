@@ -30,6 +30,9 @@ private slots:
     void on_btn_input_pressed();
 
 private slots:
+    void on_chkbox_show_intensity_stateChanged(int arg1);
+
+private slots:
     void on_chkbox_box_stateChanged(int arg1);
 
 private slots:
@@ -40,9 +43,6 @@ private slots:
 
 private slots:
     void on_chkbox_filter_stateChanged(int arg1);
-
-private slots:
-    void on_rbtn_show_intensity_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;

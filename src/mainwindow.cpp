@@ -35,7 +35,10 @@ MainWindow::MainWindow(QWidget *parent)
     ProcessChain();
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
-    renderPointCloud(ui->le_input->text().toStdString());
+    if (ui->chkbox_show_intensity->isChecked())
+        renderPointCloud(ui->le_input->text().toStdString());
+    else
+        renderPointCloud({0, 1, 1}, ui->le_input->text().toStdString());
 }
 
 MainWindow::~MainWindow()
@@ -138,7 +141,6 @@ void MainWindow::renderPointCloud(Color color, string name){
     pcl_viewer_->spin();
 };
 
-
 void MainWindow::renderPointCloud(string name){
     pcl_viewer_->removeAllPointClouds();
     pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZI> intensity_distribution(cloud_,"intensity");
@@ -147,7 +149,7 @@ void MainWindow::renderPointCloud(string name){
     pcl_viewer_->spin();
 };
 
-void MainWindow::on_rbtn_show_intensity_toggled(bool checked)
+void MainWindow::on_chkbox_show_intensity_stateChanged(int checked)
 {
     if (checked){
         ui->chkbox_filter->setChecked(false);
