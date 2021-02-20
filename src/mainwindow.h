@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QList>
+#include <QCheckBox>
 #include <memory>
 #include <string>
 #include <pcl/visualization/pcl_visualizer.h>
@@ -28,6 +30,9 @@ private slots:
     void on_btn_input_pressed();
 
 private slots:
+    void on_chkbox_box_stateChanged(int arg1);
+
+private slots:
     void on_chkbox_clust_stateChanged(int arg1);
 
 private slots:
@@ -36,12 +41,14 @@ private slots:
 private slots:
     void on_chkbox_filter_stateChanged(int arg1);
 
+private slots:
     void on_rbtn_show_intensity_toggled(bool checked);
 
 private:
     Ui::MainWindow *ui;
 
     const QString default_directory_, default_pcd_file_;
+    QList<QCheckBox*> stage_chkbtns;
 
     void SetDirectories();
 
@@ -51,5 +58,7 @@ private:
 
     void renderPointCloud(Color color, std::string name);
     void renderPointCloud(std::string name);
+    void ProcessChain();
+    void SetButtonStage(QList<QCheckBox*>::iterator i);
 };
 #endif // MAINWINDOW_H

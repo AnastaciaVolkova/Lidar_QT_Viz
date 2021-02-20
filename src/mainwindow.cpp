@@ -19,7 +19,10 @@ MainWindow::MainWindow(QWidget *parent)
     , cloud_(new pcl::PointCloud<pcl::PointXYZI>)
 {
     ui->setupUi(this);
-
+    stage_chkbtns.push_back(ui->chkbox_filter);
+    stage_chkbtns.push_back(ui->chkbox_seg);
+    stage_chkbtns.push_back(ui->chkbox_clust);
+    stage_chkbtns.push_back(ui->chkbox_box);
     SetDirectories();
 
     QDir cur = QDir(QCoreApplication::applicationDirPath());
@@ -29,6 +32,7 @@ MainWindow::MainWindow(QWidget *parent)
     pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
 
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
+    ProcessChain();
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
     renderPointCloud(ui->le_input->text().toStdString());
@@ -49,38 +53,46 @@ void MainWindow::SetDirectories(){
         ui->le_input->setText("");
 }
 
+void MainWindow::SetButtonStage(QList<QCheckBox*>::iterator i){
+    if (!(*i)->isChecked()){
+        while (i < stage_chkbtns.end()){
+            (*i)->blockSignals(true);
+            (*i)->setChecked(false);
+            (*i)->blockSignals(false);
+            i++;
+        }
+    } else {
+        QList<QCheckBox*>::reverse_iterator ri = make_reverse_iterator(i);
+        while (ri < stage_chkbtns.rend()){
+            (*ri)->blockSignals(true);
+            (*ri)->setChecked(true);
+            (*ri)->blockSignals(false);
+            ri++;
+        }
+    }
+
+    ProcessChain();
+    renderPointCloud(ui->le_input->text().toStdString());
+}
 
 void MainWindow::on_chkbox_filter_stateChanged(int arg1)
 {
-    if (ui->chkbox_filter->isChecked()){
-        ui->chkbox_seg->setEnabled(true);
-        ui->chkbox_clust->setEnabled(true);
-        ui->chkbox_box->setEnabled(true);
-    } else {
-        ui->chkbox_seg->setEnabled(false);
-        ui->chkbox_clust->setEnabled(false);
-        ui->chkbox_box->setEnabled(false);
-    }
+    SetButtonStage(stage_chkbtns.begin());
 }
 
 void MainWindow::on_chkbox_seg_stateChanged(int arg1)
 {
-    if (ui->chkbox_seg->isChecked()){
-        ui->chkbox_clust->setEnabled(true);
-        ui->chkbox_box->setEnabled(true);
-    } else {
-        ui->chkbox_clust->setEnabled(false);
-        ui->chkbox_box->setEnabled(false);
-    }
+    SetButtonStage(stage_chkbtns.begin()+1);
 }
 
 void MainWindow::on_chkbox_clust_stateChanged(int arg1)
 {
-    if (ui->chkbox_clust->isChecked()){
-        ui->chkbox_box->setEnabled(true);
-    } else {
-        ui->chkbox_box->setEnabled(false);
-    }
+    SetButtonStage(stage_chkbtns.begin()+2);
+}
+
+void MainWindow::on_chkbox_box_stateChanged(int arg1)
+{
+    SetButtonStage(stage_chkbtns.begin()+3);
 }
 
 void MainWindow::on_btn_input_pressed()
@@ -137,8 +149,19 @@ void MainWindow::renderPointCloud(string name){
 
 void MainWindow::on_rbtn_show_intensity_toggled(bool checked)
 {
-    if (checked)
+    if (checked){
+        ui->chkbox_filter->setChecked(false);
+        QList<QCheckBox*>::iterator it;
+        ui->grpbox_proc_stages->setEnabled(false);
         renderPointCloud(ui->le_input->text().toStdString());
-    else
+    }
+    else {
+        ui->grpbox_proc_stages->setEnabled(true);
         renderPointCloud({0,1,0}, ui->le_input->text().toStdString());
+    }
+}
+
+void MainWindow::ProcessChain(){
+    if (ui->chkbox_filter->isChecked())
+        cloud_ = pcl_processor->FilterCloud(cloud_, 0.1f, Eigen::Vector4f{-50, -6, -2, 1}, Eigen::Vector4f{50, 6, 10, 1});
 }
