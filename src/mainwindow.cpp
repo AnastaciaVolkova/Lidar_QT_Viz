@@ -36,9 +36,9 @@ MainWindow::MainWindow(QWidget *parent)
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
     if (ui->chkbox_show_intensity->isChecked())
-        renderPointCloud(ui->le_input->text().toStdString());
+        renderPointCloud();
     else
-        renderPointCloud({0, 1, 1}, ui->le_input->text().toStdString());
+        renderPointCloud({0, 1, 1});
 }
 
 MainWindow::~MainWindow()
@@ -69,7 +69,7 @@ void MainWindow::on_btn_input_pressed()
     }
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
 
-    renderPointCloud(ui->le_input->text().toStdString());
+    renderPointCloud();
 }
 
 void MainWindow::on_chkbox_show_intensity_stateChanged(int checked)
@@ -78,11 +78,11 @@ void MainWindow::on_chkbox_show_intensity_stateChanged(int checked)
         ui->chkbox_filter->setChecked(false);
         QList<QCheckBox*>::iterator it;
         ui->grpbox_proc_stages->setEnabled(false);
-        renderPointCloud(ui->le_input->text().toStdString());
+        renderPointCloud();
     }
     else {
         ui->grpbox_proc_stages->setEnabled(true);
-        renderPointCloud({0,1,0}, ui->le_input->text().toStdString());
+        renderPointCloud({0,1,0});
     }
 }
 
@@ -114,19 +114,19 @@ void MainWindow::on_chkbox_box_stateChanged(int arg1)
     SetButtonStage(stage_chkbtns.begin()+3);
 }
 
-void MainWindow::renderPointCloud(Color color, string name){
+void MainWindow::renderPointCloud(Color color){
     pcl_viewer_->removeAllPointClouds();
-    pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, name);
-    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
-    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
+    pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, ui->le_input->text().toStdString());
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, ui->le_input->text().toStdString());
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, ui->le_input->text().toStdString());
     pcl_viewer_->spin();
 };
 
-void MainWindow::renderPointCloud(string name){
+void MainWindow::renderPointCloud(){
     pcl_viewer_->removeAllPointClouds();
     pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZI> intensity_distribution(cloud_,"intensity");
-    pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, name);
-    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
+    pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, ui->le_input->text().toStdString());
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, ui->le_input->text().toStdString());
     pcl_viewer_->spin();
 };
 
@@ -164,5 +164,5 @@ void MainWindow::SetButtonStage(QList<QCheckBox*>::iterator i){
     }
 
     ProcessChain();
-    renderPointCloud(ui->le_input->text().toStdString());
+    renderPointCloud();
 }

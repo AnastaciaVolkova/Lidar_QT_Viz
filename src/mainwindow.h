@@ -56,8 +56,8 @@ private:
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
     std::unique_ptr<ProcessPointClouds<pcl::PointXYZI>> pcl_processor;
 
-    void renderPointCloud(Color color, std::string name);
-    void renderPointCloud(std::string name);
+    void renderPointCloud(Color color);
+    void renderPointCloud();
     void ProcessChain();
     void SetButtonStage(QList<QCheckBox*>::iterator i);
 };
