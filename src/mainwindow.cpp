@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , default_directory_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../data/pcd/data_1/"))
-    , default_pcd_file_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../src/simpleHighway.pcd"))
+    , default_pcd_file_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../src/example.pcd"))
     , cloud_(new pcl::PointCloud<pcl::PointXYZI>)
 {
     ui->setupUi(this);
