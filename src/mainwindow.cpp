@@ -32,13 +32,12 @@ MainWindow::MainWindow(QWidget *parent)
     pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
 
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
-    ProcessChain();
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
     if (ui->chkbox_show_intensity->isChecked())
         renderPointCloud();
     else
-        renderPointCloud({0, 1, 1});
+        ProcessChain();
 }
 
 MainWindow::~MainWindow()
@@ -97,6 +96,7 @@ void MainWindow::on_rbtn_is_multi_toggled(bool checked)
 void MainWindow::on_chkbox_filter_stateChanged(int arg1)
 {
     SetButtonStage(stage_chkbtns.begin());
+    ProcessChain();
 }
 
 void MainWindow::on_chkbox_seg_stateChanged(int arg1)
@@ -115,24 +115,70 @@ void MainWindow::on_chkbox_box_stateChanged(int arg1)
 }
 
 void MainWindow::renderPointCloud(Color color){
-    pcl_viewer_->removeAllPointClouds();
-    pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, ui->le_input->text().toStdString());
+    if (!pcl_viewer_->contains(ui->le_input->text().toStdString()))
+        pcl_viewer_->addPointCloud<pcl::PointXYZI> (cloud_, ui->le_input->text().toStdString());
     pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, ui->le_input->text().toStdString());
     pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, ui->le_input->text().toStdString());
     pcl_viewer_->spin();
 };
 
 void MainWindow::renderPointCloud(){
-    pcl_viewer_->removeAllPointClouds();
     pcl::visualization::PointCloudColorHandlerGenericField<pcl::PointXYZI> intensity_distribution(cloud_,"intensity");
-    pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, ui->le_input->text().toStdString());
+    if (!pcl_viewer_->contains(ui->le_input->text().toStdString()))
+        pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud_, intensity_distribution, ui->le_input->text().toStdString());
     pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, ui->le_input->text().toStdString());
     pcl_viewer_->spin();
 };
 
+void MainWindow::renderPointCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, string name, Color color){
+    if (!pcl_viewer_->contains(name))
+        pcl_viewer_->addPointCloud<pcl::PointXYZI>(cloud, name);
+
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
+    pcl_viewer_->setPointCloudRenderingProperties (pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 2, name);
+    pcl_viewer_->spin();
+};
+
 void MainWindow::ProcessChain(){
+    std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> seg_res;
+
     if (ui->chkbox_filter->isChecked())
         cloud_ = pcl_processor->FilterCloud(cloud_, 0.1f, Eigen::Vector4f{-50, -6, -2, 1}, Eigen::Vector4f{50, 6, 10, 1});
+    else{
+        renderPointCloud({0, 1, 1});
+        return;
+    }
+
+    if (ui->chkbox_seg->isChecked()){
+        seg_res = pcl_processor->SegmentPlane(cloud_, 100, 0.2);
+        cloud_ = seg_res.first;
+        renderPointCloud(seg_res.second, "plain", {0, 1, 0});
+    }
+    else{
+        renderPointCloud({0, 1, 1});
+        return;
+    }
+
+    if (ui->chkbox_clust->isChecked()){
+        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(seg_res.first, 0.4f, 10, 1000);
+        int clusterId = 0;
+        std::vector<Color> colors = {
+            {65/256.0f, 105/256.0f, 225/256.0f},
+            {100/256.0f,149/256.0f,237/256.0f},
+            {238/256.0f,130/256.0f,238/256.0f}};
+        for(pcl::PointCloud<pcl::PointXYZI>::Ptr cluster : cloudClusters)
+        {
+            std::cout << "cluster size:" << cluster->points.size() << std::endl;
+            renderPointCloud(
+                cluster,
+                ui->le_input->text().toStdString()+std::to_string(clusterId),
+                colors[clusterId%colors.size()]);
+            // Box box = point_processor->BoundingBox(cluster);
+            // if (to_stop !="clust")
+            //     renderBox(viewer,box,clusterId);
+            ++clusterId;
+        }
+    }
 }
 
 void MainWindow::SetDirectories(){

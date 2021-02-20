@@ -58,6 +58,7 @@ private:
 
     void renderPointCloud(Color color);
     void renderPointCloud();
+    void renderPointCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, std::string name, Color color);
     void ProcessChain();
     void SetButtonStage(QList<QCheckBox*>::iterator i);
 };
