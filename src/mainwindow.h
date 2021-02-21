@@ -44,6 +44,20 @@ private slots:
 private slots:
     void on_chkbox_box_stateChanged(int arg1);
 
+    void on_sld_min_x_valueChanged();
+
+    void on_sld_min_y_valueChanged();
+
+    void on_sld_min_z_valueChanged();
+
+    void on_sld_max_x_valueChanged();
+
+    void on_sld_max_y_valueChanged();
+
+    void on_sld_max_z_valueChanged();
+
+    void on_btn_apply_clicked();
+
 private:
     Ui::MainWindow *ui;
 

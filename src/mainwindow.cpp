@@ -146,6 +146,12 @@ void MainWindow::renderBox(Box& box, string name, Color color, float opacity)
 	if(opacity < 0.0)
 		opacity = 0.0;
 
+    if (pcl_viewer_->contains(name))
+        pcl_viewer_->removeShape(name);
+
+    if (pcl_viewer_->contains(name + "_fill"))
+        pcl_viewer_->removeShape(name + "_fill");
+
     pcl_viewer_->addCube(box.x_min, box.x_max, box.y_min, box.y_max, box.z_min, box.z_max, color.r, color.g, color.b, name);
     pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_REPRESENTATION, pcl::visualization::PCL_VISUALIZER_REPRESENTATION_WIREFRAME, name);
     pcl_viewer_->setShapeRenderingProperties(pcl::visualization::PCL_VISUALIZER_COLOR, color.r, color.g, color.b, name);
@@ -158,18 +164,22 @@ void MainWindow::renderBox(Box& box, string name, Color color, float opacity)
 };
 
 void MainWindow::ProcessChain(){
+    PointCloud<PointXYZI>::Ptr cloud_proc;
+    pcl_viewer_->removeAllPointClouds();
+    pcl_viewer_->removeShape();
     std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> seg_res;
-
     if (ui->chkbox_filter->isChecked())
-        cloud_ = pcl_processor->FilterCloud(cloud_, 0.1f, Eigen::Vector4f{-50, -6, -2, 1}, Eigen::Vector4f{50, 6, 10, 1});
+        cloud_proc = pcl_processor->FilterCloud(cloud_, 0.1f,
+        Eigen::Vector4f{static_cast<float>(ui->sld_min_x->value()), static_cast<float>(ui->sld_min_y->value()), static_cast<float>(ui->sld_min_z->value()), 1},
+        Eigen::Vector4f{static_cast<float>(ui->sld_max_x->value()), static_cast<float>(ui->sld_max_y->value()), static_cast<float>(ui->sld_max_z->value()), 1});
     else{
         renderPointCloud({0, 1, 1});
         return;
     }
 
     if (ui->chkbox_seg->isChecked()){
-        seg_res = pcl_processor->SegmentPlane(cloud_, 100, 0.2);
-        cloud_ = seg_res.first;
+        seg_res = pcl_processor->SegmentPlane(cloud_proc, 100, 0.2);
+        cloud_proc = seg_res.first;
         renderPointCloud(seg_res.second, "plain", {0, 1, 0});
     }
     else{
@@ -178,7 +188,7 @@ void MainWindow::ProcessChain(){
     }
 
     if (ui->chkbox_clust->isChecked()){
-        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(seg_res.first, 0.4f, 10, 1000);
+        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(cloud_proc, 0.4f, 10, 1000);
         int clusterId = 0;
         std::vector<Color> colors = {
             {65/256.0f, 105/256.0f, 225/256.0f},
@@ -230,4 +240,39 @@ void MainWindow::SetButtonStage(QList<QCheckBox*>::iterator i){
 
     ProcessChain();
     renderPointCloud();
+}
+
+void MainWindow::on_sld_min_x_valueChanged()
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_min_y_valueChanged()
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_min_z_valueChanged()
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_max_x_valueChanged()
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_max_y_valueChanged()
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_max_z_valueChanged()
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_btn_apply_clicked()
+{
+    ProcessChain();
 }
