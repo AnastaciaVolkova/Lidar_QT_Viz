@@ -29,20 +29,15 @@ private slots:
 private slots:
     void on_btn_input_pressed();
 
-private slots:
-    void on_chkbox_show_intensity_stateChanged(int arg1);
+    void on_chkbox_show_intensity_toggled(bool checked);
 
-private slots:
-    void on_chkbox_seg_stateChanged(int arg1);
+    void on_chkbox_filter_toggled(bool checked);
 
-private slots:
-    void on_chkbox_clust_stateChanged(int arg1);
+    void on_chkbox_seg_toggled(bool checked);
 
-private slots:
-    void on_chkbox_filter_stateChanged(int arg1);
+    void on_chkbox_clust_toggled(bool checked);
 
-private slots:
-    void on_chkbox_box_stateChanged(int arg1);
+    void on_chkbox_box_toggled(bool checked);
 
     void on_sld_min_x_valueChanged();
 

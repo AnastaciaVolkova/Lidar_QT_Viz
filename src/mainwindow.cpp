@@ -71,17 +71,15 @@ void MainWindow::on_btn_input_pressed()
     renderPointCloud();
 }
 
-void MainWindow::on_chkbox_show_intensity_stateChanged(int checked)
+void MainWindow::on_chkbox_show_intensity_toggled(bool checked)
 {
     if (checked){
-        ui->chkbox_filter->setChecked(false);
-        QList<QCheckBox*>::iterator it;
         ui->grpbox_proc_stages->setEnabled(false);
         renderPointCloud();
     }
     else {
         ui->grpbox_proc_stages->setEnabled(true);
-        renderPointCloud({0,1,0});
+        ProcessChain();
     }
 }
 
@@ -93,23 +91,22 @@ void MainWindow::on_rbtn_is_multi_toggled(bool checked)
         ui->le_input->setText(default_pcd_file_);
 }
 
-void MainWindow::on_chkbox_filter_stateChanged(int arg1)
+void MainWindow::on_chkbox_filter_toggled(bool checked)
 {
     SetButtonStage(stage_chkbtns.begin());
-    ProcessChain();
 }
 
-void MainWindow::on_chkbox_seg_stateChanged(int arg1)
+void MainWindow::on_chkbox_seg_toggled(bool checked)
 {
     SetButtonStage(stage_chkbtns.begin()+1);
 }
 
-void MainWindow::on_chkbox_clust_stateChanged(int arg1)
+void MainWindow::on_chkbox_clust_toggled(bool checked)
 {
     SetButtonStage(stage_chkbtns.begin()+2);
 }
 
-void MainWindow::on_chkbox_box_stateChanged(int arg1)
+void MainWindow::on_chkbox_box_toggled(bool checked)
 {
     SetButtonStage(stage_chkbtns.begin()+3);
 }
@@ -166,26 +163,25 @@ void MainWindow::renderBox(Box& box, string name, Color color, float opacity)
 void MainWindow::ProcessChain(){
     PointCloud<PointXYZI>::Ptr cloud_proc;
     pcl_viewer_->removeAllPointClouds();
-    pcl_viewer_->removeShape();
+    pcl_viewer_->removeAllShapes();
     std::pair<pcl::PointCloud<pcl::PointXYZI>::Ptr, pcl::PointCloud<pcl::PointXYZI>::Ptr> seg_res;
-    if (ui->chkbox_filter->isChecked())
+    PointCloud<PointXYZI>::Ptr cloud_to_display = cloud_;
+    Color color_to_display = {1, 1, 1};
+    if (ui->chkbox_filter->isChecked()){
         cloud_proc = pcl_processor->FilterCloud(cloud_, 0.1f,
         Eigen::Vector4f{static_cast<float>(ui->sld_min_x->value()), static_cast<float>(ui->sld_min_y->value()), static_cast<float>(ui->sld_min_z->value()), 1},
         Eigen::Vector4f{static_cast<float>(ui->sld_max_x->value()), static_cast<float>(ui->sld_max_y->value()), static_cast<float>(ui->sld_max_z->value()), 1});
-    else{
-        renderPointCloud({0, 1, 1});
-        return;
+        cloud_to_display = cloud_proc;
+        color_to_display = {0.0f, 1.0f, 1.0f};
     }
 
     if (ui->chkbox_seg->isChecked()){
         seg_res = pcl_processor->SegmentPlane(cloud_proc, 100, 0.2);
         cloud_proc = seg_res.first;
+        cloud_to_display = cloud_proc;
+        color_to_display = {0.0f, 1.0f, 1.0f};
         renderPointCloud(seg_res.second, "plain", {0, 1, 0});
-    }
-    else{
-        renderPointCloud({0, 1, 1});
-        return;
-    }
+    };
 
     if (ui->chkbox_clust->isChecked()){
         std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(cloud_proc, 0.4f, 10, 1000);
@@ -207,6 +203,8 @@ void MainWindow::ProcessChain(){
             }
             ++clusterId;
         }
+    } else {
+        renderPointCloud(cloud_to_display, ui->le_input->text().toStdString(), color_to_display);
     }
 }
 
@@ -239,7 +237,6 @@ void MainWindow::SetButtonStage(QList<QCheckBox*>::iterator i){
     }
 
     ProcessChain();
-    renderPointCloud();
 }
 
 void MainWindow::on_sld_min_x_valueChanged()
