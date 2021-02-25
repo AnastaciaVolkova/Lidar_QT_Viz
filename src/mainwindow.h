@@ -51,6 +51,8 @@ private slots:
 
     void on_sld_max_z_valueChanged();
 
+    void on_sld_filter_res_valueChanged();
+
     void on_btn_apply_clicked();
 
 private:

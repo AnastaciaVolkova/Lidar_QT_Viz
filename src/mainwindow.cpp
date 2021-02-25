@@ -168,7 +168,7 @@ void MainWindow::ProcessChain(){
     PointCloud<PointXYZI>::Ptr cloud_to_display = cloud_;
     Color color_to_display = {1, 1, 1};
     if (ui->chkbox_filter->isChecked()){
-        cloud_proc = pcl_processor->FilterCloud(cloud_, 0.1f,
+        cloud_proc = pcl_processor->FilterCloud(cloud_, static_cast<float>(ui->sld_filter_res->value())/100.0f,
         Eigen::Vector4f{static_cast<float>(ui->sld_min_x->value()), static_cast<float>(ui->sld_min_y->value()), static_cast<float>(ui->sld_min_z->value()), 1},
         Eigen::Vector4f{static_cast<float>(ui->sld_max_x->value()), static_cast<float>(ui->sld_max_y->value()), static_cast<float>(ui->sld_max_z->value()), 1});
         cloud_to_display = cloud_proc;
@@ -266,6 +266,10 @@ void MainWindow::on_sld_max_y_valueChanged()
 
 void MainWindow::on_sld_max_z_valueChanged()
 {
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_filter_res_valueChanged(){
     ui->btn_apply->setEnabled(true);
 }
 
