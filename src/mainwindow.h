@@ -26,7 +26,6 @@ public:
 private slots:
     void on_rbtn_is_multi_toggled(bool checked);
 
-private slots:
     void on_btn_input_pressed();
 
     void on_chkbox_show_intensity_toggled(bool checked);
@@ -54,6 +53,10 @@ private slots:
     void on_sld_filter_res_valueChanged();
 
     void on_btn_apply_clicked();
+
+    void on_sld_dist_thr_valueChanged(int value);
+
+    void on_sld_max_iter_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;

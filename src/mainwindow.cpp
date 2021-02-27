@@ -176,7 +176,10 @@ void MainWindow::ProcessChain(){
     }
 
     if (ui->chkbox_seg->isChecked()){
-        seg_res = pcl_processor->SegmentPlane(cloud_proc, 100, 0.2);
+        seg_res = pcl_processor->SegmentPlane(
+            cloud_proc,
+            ui->sld_max_iter->value(),
+            static_cast<float>(ui->sld_dist_thr->value())/100.0f);
         cloud_proc = seg_res.first;
         cloud_to_display = cloud_proc;
         color_to_display = {0.0f, 1.0f, 1.0f};
@@ -270,6 +273,16 @@ void MainWindow::on_sld_max_z_valueChanged()
 }
 
 void MainWindow::on_sld_filter_res_valueChanged(){
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_dist_thr_valueChanged(int value)
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_max_iter_valueChanged(int value)
+{
     ui->btn_apply->setEnabled(true);
 }
 
