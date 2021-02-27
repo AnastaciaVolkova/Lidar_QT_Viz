@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QList>
+#include <QMap>
 #include <QCheckBox>
 #include <memory>
 #include <string>
@@ -63,6 +64,7 @@ private:
 
     const QString default_directory_, default_pcd_file_;
     QList<QCheckBox*> stage_chkbtns;
+    QList<QMap<QString, QWidget*>> stage_controls_;
 
     void SetDirectories();
 
@@ -75,6 +77,6 @@ private:
     void renderPointCloud(pcl::PointCloud<pcl::PointXYZI>::Ptr cloud, std::string name, Color color);
     void renderBox(Box& box, std::string name, Color color={1,0,0}, float opacity=1.0f);
     void ProcessChain();
-    void SetButtonStage(QList<QCheckBox*>::iterator i);
+    void SetButtonStage(QList<QMap<QString, QWidget*>>::iterator i);
 };
 #endif // MAINWINDOW_H

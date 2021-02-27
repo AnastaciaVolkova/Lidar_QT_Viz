@@ -23,6 +23,12 @@ MainWindow::MainWindow(QWidget *parent)
     stage_chkbtns.push_back(ui->chkbox_seg);
     stage_chkbtns.push_back(ui->chkbox_clust);
     stage_chkbtns.push_back(ui->chkbox_box);
+
+    stage_controls_.push_back({{"chkbox", ui->chkbox_filter}, {"tab", ui->filter_params_widget}});
+    stage_controls_.push_back({{"chkbox", ui->chkbox_seg}, {"tab", ui->seg_params_widget}});
+    stage_controls_.push_back({{"chkbox", ui->chkbox_clust}, {"tab", ui->clus_params_widget}});
+    stage_controls_.push_back({{"chkbox", ui->chkbox_box}});
+
     SetDirectories();
 
     QDir cur = QDir(QCoreApplication::applicationDirPath());
@@ -93,22 +99,22 @@ void MainWindow::on_rbtn_is_multi_toggled(bool checked)
 
 void MainWindow::on_chkbox_filter_toggled(bool checked)
 {
-    SetButtonStage(stage_chkbtns.begin());
+    SetButtonStage(stage_controls_.begin());
 }
 
 void MainWindow::on_chkbox_seg_toggled(bool checked)
 {
-    SetButtonStage(stage_chkbtns.begin()+1);
+    SetButtonStage(stage_controls_.begin()+1);
 }
 
 void MainWindow::on_chkbox_clust_toggled(bool checked)
 {
-    SetButtonStage(stage_chkbtns.begin()+2);
+    SetButtonStage(stage_controls_.begin()+2);
 }
 
 void MainWindow::on_chkbox_box_toggled(bool checked)
 {
-    SetButtonStage(stage_chkbtns.begin()+3);
+    SetButtonStage(stage_controls_.begin()+3);
 }
 
 void MainWindow::renderPointCloud(Color color){
@@ -222,21 +228,28 @@ void MainWindow::SetDirectories(){
         ui->le_input->setText("");
 }
 
-void MainWindow::SetButtonStage(QList<QCheckBox*>::iterator i){
-    if (!(*i)->isChecked()){
-        while (i < stage_chkbtns.end()){
-            (*i)->blockSignals(true);
-            (*i)->setChecked(false);
-            (*i)->blockSignals(false);
+void MainWindow::SetButtonStage(QList<QMap<QString, QWidget*>>::iterator i){
+    if (!static_cast<QCheckBox*>((*i)[QString("chkbox")])->isChecked()){
+        while( i<stage_controls_.end() ){
+            QCheckBox* cb = static_cast<QCheckBox*>((*i)[QString("chkbox")]);
+            QWidget* tab =  i->contains("tab")? (*i)[QString("tab")]: nullptr;
+            cb->blockSignals(true);
+            cb->setChecked(false);
+            cb->blockSignals(false);
+            if (tab != nullptr)
+                tab->setEnabled(false);
             i++;
         }
     } else {
-        QList<QCheckBox*>::reverse_iterator ri = make_reverse_iterator(i);
-        while (ri < stage_chkbtns.rend()){
-            (*ri)->blockSignals(true);
-            (*ri)->setChecked(true);
-            (*ri)->blockSignals(false);
-            ri++;
+        while (i >= stage_controls_.begin()){
+            QCheckBox* cb = static_cast<QCheckBox*>((*i)[QString("chkbox")]);
+            QWidget* tab =  i->contains("tab")? (*i)[QString("tab")]: nullptr;
+            cb->blockSignals(true);
+            cb->setChecked(true);
+            cb->blockSignals(false);
+            if (tab != nullptr)
+                tab->setEnabled(true);
+            i--;
         }
     }
 
