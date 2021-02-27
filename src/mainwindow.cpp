@@ -209,6 +209,7 @@ void MainWindow::ProcessChain(){
     } else {
         renderPointCloud(cloud_to_display, ui->le_input->text().toStdString(), color_to_display);
     }
+    ui->btn_apply->setEnabled(false);
 }
 
 void MainWindow::SetDirectories(){
