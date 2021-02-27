@@ -186,7 +186,6 @@
                  </property>
                 </widget>
                </item>
-
                <item>
                 <widget class="QCheckBox" name="chkbox_box">
                  <property name="text">
@@ -197,8 +196,6 @@
                  </property>
                 </widget>
                </item>
-
-
               </layout>
              </widget>
             </item>
@@ -266,236 +263,288 @@
               </layout>
              </widget>
             </item>
-
            </layout>
           </widget>
          </item>
          <item>
-             <widget class="QTabWidget" name="tab_params">
-          <widget class="QWidget" name="filter_params_widget" native="true">
-               <attribute name="title">
-                <string>Filter Paramters</string>
-               </attribute>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="4" column="1">
-             <widget class="QLabel" name="lbl_max_y">
-              <property name="text">
-               <string>Max Point Y</string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="lbl_min_z">
-              <property name="text">
-               <string>Min Point Z</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="1">
-             <widget class="QSlider" name="sld_min_y">
-              <property name="minimum">
-               <number>-100</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>20</number>
-              </property>
-              <property name="value">
-               <number>-6</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="0">
-             <widget class="QSlider" name="sld_max_x">
-              <property name="minimum">
-               <number>-100</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>20</number>
-              </property>
-              <property name="value">
-               <number>50</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="2">
-             <widget class="QLabel" name="lbl_max_z">
-              <property name="text">
-               <string>Max Point Z</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="2">
-             <widget class="QSlider" name="sld_max_z">
-              <property name="minimum">
-               <number>-100</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>20</number>
-              </property>
-              <property name="value">
-               <number>10</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLabel" name="lbl_filter_params">
-              <property name="text">
-               <string>Filter parameters</string>
-              </property>
-             </widget>
-            </item>
-            <item row="6" column="1">
-             <widget class="QSlider" name="sld_max_y">
-              <property name="minimum">
-               <number>-100</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>20</number>
-              </property>
-              <property name="value">
-               <number>6</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QLabel" name="lbl_min_y">
-              <property name="text">
-               <string>Min Point Y </string>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="lbl_min_x">
-              <property name="text">
-               <string>Min Point X</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0">
-             <widget class="QSlider" name="sld_min_x">
-              <property name="minimum">
-               <number>-100</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>20</number>
-              </property>
-              <property name="value">
-               <number>-50</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="4" column="0">
-             <widget class="QLabel" name="lbl_max_x">
-              <property name="text">
-               <string>Max Point X</string>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="2">
-             <widget class="QSlider" name="sld_min_z">
-              <property name="minimum">
-               <number>-100</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>5</number>
-              </property>
-              <property name="pageStep">
-               <number>20</number>
-              </property>
-              <property name="value">
-               <number>-2</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="3">
-             <widget class="QLabel" name="lbl_filter_res">
-              <property name="text">
-               <string>Filter resolution</string>
-              </property>
+          <widget class="QTabWidget" name="tab_params">
+           <property name="currentIndex">
+            <number>1</number>
+           </property>
+           <widget class="QWidget" name="filter_params_widget">
+            <attribute name="title">
+             <string>Filter Paramters</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_3">
+             <item row="4" column="1">
+              <widget class="QLabel" name="lbl_max_y">
+               <property name="text">
+                <string>Max Point Y</string>
+               </property>
               </widget>
-            </item>
-            <item row="3" column="3">
-             <widget class="QSlider" name="sld_filter_res">
-              <property name="minimum">
-               <number>1</number>
-              </property>
-              <property name="maximum">
-               <number>100</number>
-              </property>
-              <property name="singleStep">
-               <number>1</number>
-              </property>
-              <property name="pageStep">
-               <number>10</number>
-              </property>
-              <property name="value">
-               <number>10</number>
-              </property>
-              <property name="orientation">
-               <enum>Qt::Vertical</enum>
-              </property>
-             </widget>
-            </item>
-
-           </layout>
-          </widget>
-          <widget class="QWidget" name="seg_params_widget" native="true">
-               <attribute name="title">
-                <string>Segmentation Paramters</string>
-               </attribute>
+             </item>
+             <item row="1" column="2">
+              <widget class="QLabel" name="lbl_min_z">
+               <property name="text">
+                <string>Min Point Z</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QSlider" name="sld_min_y">
+               <property name="minimum">
+                <number>-100</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>-6</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QSlider" name="sld_max_x">
+               <property name="minimum">
+                <number>-100</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>50</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="2">
+              <widget class="QLabel" name="lbl_max_z">
+               <property name="text">
+                <string>Max Point Z</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="2">
+              <widget class="QSlider" name="sld_max_z">
+               <property name="minimum">
+                <number>-100</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="lbl_filter_params">
+               <property name="text">
+                <string>Filter parameters</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QSlider" name="sld_max_y">
+               <property name="minimum">
+                <number>-100</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>6</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="lbl_min_y">
+               <property name="text">
+                <string>Min Point Y </string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="lbl_min_x">
+               <property name="text">
+                <string>Min Point X</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QSlider" name="sld_min_x">
+               <property name="minimum">
+                <number>-100</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>-50</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLabel" name="lbl_max_x">
+               <property name="text">
+                <string>Max Point X</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="2">
+              <widget class="QSlider" name="sld_min_z">
+               <property name="minimum">
+                <number>-100</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>-2</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="3">
+              <widget class="QLabel" name="lbl_filter_res">
+               <property name="text">
+                <string>Filter resolution</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="3">
+              <widget class="QSlider" name="sld_filter_res">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="singleStep">
+                <number>1</number>
+               </property>
+               <property name="pageStep">
+                <number>10</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
-      </widget>
+           <widget class="QWidget" name="seg_params_widget">
+            <attribute name="title">
+             <string>Segmentation Paramters</string>
+            </attribute>
+            <layout class="QGridLayout" name="gridLayout_4">
+             <item row="3" column="0">
+              <widget class="QLabel" name="lbl_max_iter">
+               <property name="text">
+                <string>Maximum number of iterations</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QSlider" name="sld_dist_thr">
+               <property name="minimum">
+                <number>1</number>
+               </property>
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>20</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLabel" name="lbl_dist_thr">
+               <property name="text">
+                <string>Distance threshold</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QSlider" name="sld_max_iter">
+               <property name="maximum">
+                <number>500</number>
+               </property>
+               <property name="singleStep">
+                <number>5</number>
+               </property>
+               <property name="pageStep">
+                <number>20</number>
+               </property>
+               <property name="value">
+                <number>100</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+          </widget>
          </item>
         </layout>
        </widget>
