@@ -544,6 +544,11 @@
              </item>
             </layout>
            </widget>
+           <widget class="QWidget" name="clus_params_widget">
+            <attribute name="title">
+             <string>Page</string>
+            </attribute>
+           </widget>
           </widget>
          </item>
         </layout>
