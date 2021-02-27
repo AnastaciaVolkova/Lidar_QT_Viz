@@ -271,7 +271,11 @@
           </widget>
          </item>
          <item>
+             <widget class="QTabWidget" name="tab_params">
           <widget class="QWidget" name="filter_params_widget" native="true">
+               <attribute name="title">
+                <string>Filter Paramters</string>
+               </attribute>
            <layout class="QGridLayout" name="gridLayout_3">
             <item row="4" column="1">
              <widget class="QLabel" name="lbl_max_y">
@@ -486,6 +490,12 @@
 
            </layout>
           </widget>
+          <widget class="QWidget" name="seg_params_widget" native="true">
+               <attribute name="title">
+                <string>Segmentation Paramters</string>
+               </attribute>
+           </widget>
+      </widget>
          </item>
         </layout>
        </widget>
