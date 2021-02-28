@@ -269,7 +269,7 @@
          <item>
           <widget class="QTabWidget" name="tab_params">
            <property name="currentIndex">
-            <number>1</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="filter_params_widget">
             <attribute name="title">
@@ -546,8 +546,82 @@
            </widget>
            <widget class="QWidget" name="clus_params_widget">
             <attribute name="title">
-             <string>Page</string>
+             <string>Cluster Parameters</string>
             </attribute>
+            <layout class="QGridLayout" name="gridLayout_5">
+             <item row="1" column="2">
+              <widget class="QSlider" name="sld_clus_mx_size">
+               <property name="maximum">
+                <number>2000</number>
+               </property>
+               <property name="singleStep">
+                <number>10</number>
+               </property>
+               <property name="pageStep">
+                <number>50</number>
+               </property>
+               <property name="value">
+                <number>1000</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QSlider" name="sld_clus_res">
+               <property name="maximum">
+                <number>100</number>
+               </property>
+               <property name="value">
+                <number>40</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QSlider" name="sld_clus_mn_size">
+               <property name="maximum">
+                <number>1000</number>
+               </property>
+               <property name="singleStep">
+                <number>10</number>
+               </property>
+               <property name="pageStep">
+                <number>50</number>
+               </property>
+               <property name="value">
+                <number>10</number>
+               </property>
+               <property name="orientation">
+                <enum>Qt::Vertical</enum>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <widget class="QLabel" name="lbl_clus_res">
+               <property name="text">
+                <string>Resolution</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="lbl_clus_mn_size">
+               <property name="text">
+                <string>Min cluster size</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <widget class="QLabel" name="lbl_clus_mx_size">
+               <property name="text">
+                <string>Max cluster size</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </widget>
           </widget>
          </item>
