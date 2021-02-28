@@ -59,6 +59,12 @@ private slots:
 
     void on_sld_max_iter_valueChanged(int value);
 
+    void on_sld_clus_res_valueChanged(int value);
+
+    void on_sld_clus_mn_size_valueChanged(int value);
+
+    void on_sld_clus_mx_size_valueChanged(int value);
+
 private:
     Ui::MainWindow *ui;
 

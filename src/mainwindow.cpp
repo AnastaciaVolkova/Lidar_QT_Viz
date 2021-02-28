@@ -193,7 +193,11 @@ void MainWindow::ProcessChain(){
     };
 
     if (ui->chkbox_clust->isChecked()){
-        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(cloud_proc, 0.4f, 10, 1000);
+        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(
+            cloud_proc,
+            static_cast<float>(ui->sld_clus_res->value())/100.0f,
+            ui->sld_clus_mn_size->value(),
+            ui->sld_clus_mx_size->value());
         int clusterId = 0;
         std::vector<Color> colors = {
             {65/256.0f, 105/256.0f, 225/256.0f},
@@ -299,6 +303,19 @@ void MainWindow::on_sld_max_iter_valueChanged(int value)
 {
     ui->btn_apply->setEnabled(true);
 }
+
+void MainWindow::on_sld_clus_res_valueChanged(int value)
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+void MainWindow::on_sld_clus_mn_size_valueChanged(int value){
+    ui->btn_apply->setEnabled(true);
+};
+
+void MainWindow::on_sld_clus_mx_size_valueChanged(int value){
+    ui->btn_apply->setEnabled(true);
+};
 
 void MainWindow::on_btn_apply_clicked()
 {
