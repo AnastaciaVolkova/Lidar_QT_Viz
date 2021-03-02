@@ -65,6 +65,10 @@ private slots:
 
     void on_sld_clus_mx_size_valueChanged(int value);
 
+    void on_rbtn_clust_pcl_toggled(bool checked);
+
+    void on_rbtn_clust_my_toggled(bool checked);
+
 private:
     Ui::MainWindow *ui;
 

@@ -97,6 +97,17 @@ void MainWindow::on_rbtn_is_multi_toggled(bool checked)
         ui->le_input->setText(default_pcd_file_);
 }
 
+void MainWindow::on_rbtn_clust_pcl_toggled(bool checked)
+{
+    ui->btn_apply->setEnabled(true);
+}
+
+
+void MainWindow::on_rbtn_clust_my_toggled(bool checked)
+{
+    ui->btn_apply->setEnabled(true);
+}
+
 void MainWindow::on_chkbox_filter_toggled(bool checked)
 {
     SetButtonStage(stage_controls_.begin());
