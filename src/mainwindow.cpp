@@ -204,6 +204,8 @@ void MainWindow::ProcessChain(){
     };
 
     if (ui->chkbox_clust->isChecked()){
+        qDebug() << ui->rbtn_clust_pcl->isChecked();
+
         std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(
             cloud_proc,
             static_cast<float>(ui->sld_clus_res->value())/100.0f,
