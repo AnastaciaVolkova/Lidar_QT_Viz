@@ -33,10 +33,10 @@ include_directories("/usr/local/include/vtk-9.0/")
 #add_definitions(${PCL_DEFINITIONS})
 
 set(PROJECT_SOURCES
-        main.cpp
-        mainwindow.cpp
-        mainwindow.h
-        mainwindow.ui
+        ../src/main.cpp
+        ../src/mainwindow.cpp
+        ../src/mainwindow.h
+        ../src/mainwindow.ui
 )
 
 add_executable(LidarQT ${PROJECT_SOURCES})
