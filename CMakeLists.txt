@@ -28,7 +28,7 @@ find_package(PCL
 )
 
 find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED QUIET)
-include_directories("/usr/local/include/vtk-9.0/")
+
 #list(REMOVE_ITEM PCL_LIBRARIES "vtkproj4")
 #add_definitions(${PCL_DEFINITIONS})
 
