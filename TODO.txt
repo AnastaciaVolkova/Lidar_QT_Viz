@@ -1,2 +1,11 @@
 QFileDialog::DontResolveSymlinks
 
+master vtk => qt qmlplugin error
+master pck => namespace boost error
+
+vtk 9
+libpcl-dev 
+pcl uses old version of vtk
+
+vtk 8 - can't compile with gcc-10
+
