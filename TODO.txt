@@ -1,11 +1,13 @@
 QFileDialog::DontResolveSymlinks
 
 master vtk => qt qmlplugin error
-master pck => namespace boost error
+master pcl => namespace boost error => use boost 1.65
 
 vtk 9
 libpcl-dev 
 pcl uses old version of vtk
 
 vtk 8 - can't compile with gcc-10
+
+QVTKRenderWidget.hpp was copied to /usr/local/include
 
