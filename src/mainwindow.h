@@ -73,6 +73,7 @@ private:
     Ui::MainWindow *ui;
 
     const QString default_directory_, default_pcd_file_;
+    const double camera_pos_;
     QList<QCheckBox*> stage_chkbtns;
     QList<QMap<QString, QWidget*>> stage_controls_;
 

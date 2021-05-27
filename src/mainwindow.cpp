@@ -17,6 +17,7 @@ MainWindow::MainWindow(QWidget *parent)
     , default_directory_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../data/pcd/data_1/"))
     , default_pcd_file_(QDir(QCoreApplication::applicationDirPath()).relativeFilePath("../src/example.pcd"))
     , cloud_(new pcl::PointCloud<pcl::PointXYZI>)
+    , camera_pos_(16)
 {
     ui->setupUi(this);
     stage_chkbtns.push_back(ui->chkbox_filter);
@@ -36,6 +37,8 @@ MainWindow::MainWindow(QWidget *parent)
     vtkNew<vtkOpenGLRenderer> r;
 
     pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
+    pcl_viewer_->initCameraParameters();
+    pcl_viewer_->setCameraPosition(-camera_pos_, -camera_pos_, camera_pos_, 1, 1, 0);
 
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
