@@ -33,10 +33,10 @@ find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED QUIET)
 #add_definitions(${PCL_DEFINITIONS})
 
 set(PROJECT_SOURCES
-        ../src/main.cpp
-        ../src/mainwindow.cpp
-        ../src/mainwindow.h
-        ../src/mainwindow.ui
+        ./src/main.cpp
+        ./src/mainwindow.cpp
+        ./src/mainwindow.h
+        ./src/mainwindow.ui
 )
 
 add_executable(LidarQT ${PROJECT_SOURCES})
