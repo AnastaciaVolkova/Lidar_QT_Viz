@@ -34,19 +34,28 @@ MainWindow::MainWindow(QWidget *parent)
 
     QDir cur = QDir(QCoreApplication::applicationDirPath());
 
+    if (ui->rbtn_is_multi->isChecked())
+        stream_ = pcl_processor->streamPcd(ui->le_input->text().toStdString());
+    else
+        stream_.push_back(ui->le_input->text().toStdString());
+    stream_it_ = stream_.begin();
+
     vtkNew<vtkOpenGLRenderer> r;
 
     pcl_viewer_.reset(new pcl::visualization::PCLVisualizer(r, ui->vtk_widget->renderWindow(), "3d view of point cloud", false));
     pcl_viewer_->initCameraParameters();
     pcl_viewer_->setCameraPosition(-camera_pos_, -camera_pos_, camera_pos_, 1, 1, 0);
 
-    cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
+    cloud_ = pcl_processor->loadPcd(stream_it_->string());
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
     if (ui->chkbox_show_intensity->isChecked())
         renderPointCloud();
     else
         ProcessChain();
+    timer_ = new QTimer(this);
+    connect(timer_, SIGNAL(timeout()), this, SLOT(UpdatePCL()));
+    timer_->start(1000);
 }
 
 MainWindow::~MainWindow()
@@ -66,6 +75,7 @@ void MainWindow::on_btn_input_pressed()
                                                          tr("Choose pcd file"),
                                                          file_dir, tr("Point cloud data (*.pcd)"));
         ui->le_input->setText(file_name);
+
     } else {
         if (!file_info.exists())
             file_dir = default_directory_;
@@ -74,6 +84,7 @@ void MainWindow::on_btn_input_pressed()
                                                               file_dir,
                                                               QFileDialog::ShowDirsOnly);
         ui->le_input->setText(directory);
+        stream_ = pcl_processor->streamPcd(directory.toStdString());
     }
     cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
 
@@ -104,7 +115,6 @@ void MainWindow::on_rbtn_clust_pcl_toggled(bool checked)
 {
     ui->btn_apply->setEnabled(true);
 }
-
 
 void MainWindow::on_rbtn_clust_my_toggled(bool checked)
 {
@@ -337,3 +347,7 @@ void MainWindow::on_btn_apply_clicked()
 {
     ProcessChain();
 }
+
+void MainWindow::UpdatePCL(){
+    qDebug() << "Hello";
+};

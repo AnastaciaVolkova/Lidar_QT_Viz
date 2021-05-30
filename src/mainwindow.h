@@ -5,6 +5,7 @@
 #include <QList>
 #include <QMap>
 #include <QCheckBox>
+#include <QTimer>
 #include <memory>
 #include <string>
 #include <pcl/visualization/pcl_visualizer.h>
@@ -69,6 +70,8 @@ private slots:
 
     void on_rbtn_clust_my_toggled(bool checked);
 
+    void UpdatePCL();
+
 private:
     Ui::MainWindow *ui;
 
@@ -76,6 +79,7 @@ private:
     const double camera_pos_;
     QList<QCheckBox*> stage_chkbtns;
     QList<QMap<QString, QWidget*>> stage_controls_;
+    QTimer *timer_;
 
     void SetDirectories();
 
@@ -89,5 +93,7 @@ private:
     void renderBox(Box& box, std::string name, Color color={1,0,0}, float opacity=1.0f);
     void ProcessChain();
     void SetButtonStage(QList<QMap<QString, QWidget*>>::iterator i);
+    std::vector<boost::filesystem::path> stream_;
+    std::vector<boost::filesystem::path>::iterator stream_it_;
 };
 #endif // MAINWINDOW_H
