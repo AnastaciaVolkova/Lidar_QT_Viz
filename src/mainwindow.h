@@ -85,7 +85,7 @@ private:
 
     pcl::visualization::PCLVisualizer::Ptr pcl_viewer_;
     pcl::PointCloud<pcl::PointXYZI>::Ptr cloud_;
-    std::unique_ptr<ProcessPointClouds<pcl::PointXYZI>> pcl_processor;
+    std::unique_ptr<ProcessPointClouds<pcl::PointXYZI>> pcl_processor_;
 
     void renderPointCloud(Color color);
     void renderPointCloud();

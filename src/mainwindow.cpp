@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     QDir cur = QDir(QCoreApplication::applicationDirPath());
 
     if (ui->rbtn_is_multi->isChecked())
-        stream_ = pcl_processor->streamPcd(ui->le_input->text().toStdString());
+        stream_ = pcl_processor_->streamPcd(ui->le_input->text().toStdString());
     else
         stream_.push_back(ui->le_input->text().toStdString());
     stream_it_ = stream_.begin();
@@ -46,7 +46,7 @@ MainWindow::MainWindow(QWidget *parent)
     pcl_viewer_->initCameraParameters();
     pcl_viewer_->setCameraPosition(-camera_pos_, -camera_pos_, camera_pos_, 1, 1, 0);
 
-    cloud_ = pcl_processor->loadPcd(stream_it_->string());
+    cloud_ = pcl_processor_->loadPcd(stream_it_->string());
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
     if (ui->chkbox_show_intensity->isChecked())
@@ -84,9 +84,9 @@ void MainWindow::on_btn_input_pressed()
                                                               file_dir,
                                                               QFileDialog::ShowDirsOnly);
         ui->le_input->setText(directory);
-        stream_ = pcl_processor->streamPcd(directory.toStdString());
+        stream_ = pcl_processor_->streamPcd(directory.toStdString());
     }
-    cloud_ = pcl_processor->loadPcd(ui->le_input->text().toStdString());
+    cloud_ = pcl_processor_->loadPcd(ui->le_input->text().toStdString());
 
     renderPointCloud();
 }
@@ -198,7 +198,7 @@ void MainWindow::ProcessChain(){
     PointCloud<PointXYZI>::Ptr cloud_to_display = cloud_;
     Color color_to_display = {1, 1, 1};
     if (ui->chkbox_filter->isChecked()){
-        cloud_proc = pcl_processor->FilterCloud(cloud_, static_cast<float>(ui->sld_filter_res->value())/100.0f,
+        cloud_proc = pcl_processor_->FilterCloud(cloud_, static_cast<float>(ui->sld_filter_res->value())/100.0f,
         Eigen::Vector4f{static_cast<float>(ui->sld_min_x->value()), static_cast<float>(ui->sld_min_y->value()), static_cast<float>(ui->sld_min_z->value()), 1},
         Eigen::Vector4f{static_cast<float>(ui->sld_max_x->value()), static_cast<float>(ui->sld_max_y->value()), static_cast<float>(ui->sld_max_z->value()), 1});
         cloud_to_display = cloud_proc;
@@ -206,7 +206,7 @@ void MainWindow::ProcessChain(){
     }
 
     if (ui->chkbox_seg->isChecked()){
-        seg_res = pcl_processor->SegmentPlane(
+        seg_res = pcl_processor_->SegmentPlane(
             cloud_proc,
             ui->sld_max_iter->value(),
             static_cast<float>(ui->sld_dist_thr->value())/100.0f);
@@ -219,7 +219,7 @@ void MainWindow::ProcessChain(){
     if (ui->chkbox_clust->isChecked()){
         qDebug() << ui->rbtn_clust_pcl->isChecked();
 
-        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor->Clustering(
+        std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor_->Clustering(
             cloud_proc,
             static_cast<float>(ui->sld_clus_res->value())/100.0f,
             ui->sld_clus_mn_size->value(),
@@ -237,7 +237,7 @@ void MainWindow::ProcessChain(){
                 ui->le_input->text().toStdString()+std::to_string(clusterId),
                 colors[clusterId%colors.size()]);
             if (ui->chkbox_box->isChecked()){
-                Box box = pcl_processor->BoundingBox(cluster);
+                Box box = pcl_processor_->BoundingBox(cluster);
                 renderBox(box,"Box"+to_string(clusterId));
             }
             ++clusterId;
