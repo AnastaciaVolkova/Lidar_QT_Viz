@@ -95,5 +95,17 @@ private:
     void SetButtonStage(QList<QMap<QString, QWidget*>>::iterator i);
     std::vector<boost::filesystem::path> stream_;
     std::vector<boost::filesystem::path>::iterator stream_it_;
+
+    struct Pararameters{
+      struct Filter{
+            int res, min_x, max_x, min_y, max_y, min_z, max_z;
+      } filter;
+      struct Segmentation{
+          int max_iter, threshold;
+      } segmenation;
+      struct Clusterisation{
+          int res, mn_size, mx_size;
+      } clusterisation;
+    } parameters_;
 };
 #endif // MAINWINDOW_H

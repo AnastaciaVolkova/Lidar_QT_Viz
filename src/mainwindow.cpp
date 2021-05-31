@@ -49,6 +49,15 @@ MainWindow::MainWindow(QWidget *parent)
     cloud_ = pcl_processor_->loadPcd(stream_it_->string());
     pcl_viewer_->setupInteractor(ui->vtk_widget->interactor(), ui->vtk_widget->renderWindow());
     ui->vtk_widget->update();
+
+    parameters_ = {
+        {ui->sld_filter_res->value(),
+         ui->sld_min_x->value(), ui->sld_max_x->value(),
+         ui->sld_min_y->value(), ui->sld_max_y->value(),
+         ui->sld_min_z->value(), ui->sld_max_z->value()},
+        {ui->sld_max_iter->value(), ui->sld_dist_thr->value()},
+        {ui->sld_clus_res->value(), ui->sld_clus_mn_size->value(), ui->sld_clus_mx_size->value()}};
+
     if (ui->chkbox_show_intensity->isChecked())
         renderPointCloud();
     else
@@ -198,9 +207,9 @@ void MainWindow::ProcessChain(){
     PointCloud<PointXYZI>::Ptr cloud_to_display = cloud_;
     Color color_to_display = {1, 1, 1};
     if (ui->chkbox_filter->isChecked()){
-        cloud_proc = pcl_processor_->FilterCloud(cloud_, static_cast<float>(ui->sld_filter_res->value())/100.0f,
-        Eigen::Vector4f{static_cast<float>(ui->sld_min_x->value()), static_cast<float>(ui->sld_min_y->value()), static_cast<float>(ui->sld_min_z->value()), 1},
-        Eigen::Vector4f{static_cast<float>(ui->sld_max_x->value()), static_cast<float>(ui->sld_max_y->value()), static_cast<float>(ui->sld_max_z->value()), 1});
+        cloud_proc = pcl_processor_->FilterCloud(cloud_, static_cast<float>(parameters_.filter.res)/100.0f,
+        Eigen::Vector4f{static_cast<float>(parameters_.filter.min_x), static_cast<float>(parameters_.filter.min_y), static_cast<float>(parameters_.filter.min_z), 1},
+        Eigen::Vector4f{static_cast<float>(parameters_.filter.max_x), static_cast<float>(parameters_.filter.max_y), static_cast<float>(parameters_.filter.max_z), 1});
         cloud_to_display = cloud_proc;
         color_to_display = {0.0f, 1.0f, 1.0f};
     }
@@ -208,8 +217,8 @@ void MainWindow::ProcessChain(){
     if (ui->chkbox_seg->isChecked()){
         seg_res = pcl_processor_->SegmentPlane(
             cloud_proc,
-            ui->sld_max_iter->value(),
-            static_cast<float>(ui->sld_dist_thr->value())/100.0f);
+            parameters_.segmenation.max_iter,
+            static_cast<float>(parameters_.segmenation.threshold)/100.0f);
         cloud_proc = seg_res.first;
         cloud_to_display = cloud_proc;
         color_to_display = {0.0f, 1.0f, 1.0f};
@@ -221,9 +230,9 @@ void MainWindow::ProcessChain(){
 
         std::vector<pcl::PointCloud<pcl::PointXYZI>::Ptr> cloudClusters = pcl_processor_->Clustering(
             cloud_proc,
-            static_cast<float>(ui->sld_clus_res->value())/100.0f,
-            ui->sld_clus_mn_size->value(),
-            ui->sld_clus_mx_size->value());
+            static_cast<float>(parameters_.clusterisation.res)/100.0f,
+            parameters_.clusterisation.mn_size,
+            parameters_.clusterisation.mx_size);
         int clusterId = 0;
         std::vector<Color> colors = {
             {65/256.0f, 105/256.0f, 225/256.0f},
@@ -345,6 +354,13 @@ void MainWindow::on_sld_clus_mx_size_valueChanged(int value){
 
 void MainWindow::on_btn_apply_clicked()
 {
+    parameters_ = {
+        {ui->sld_filter_res->value(),
+         ui->sld_min_x->value(), ui->sld_max_x->value(),
+         ui->sld_min_y->value(), ui->sld_max_y->value(),
+         ui->sld_min_z->value(), ui->sld_max_z->value()},
+        {ui->sld_max_iter->value(), ui->sld_dist_thr->value()},
+        {ui->sld_clus_res->value(), ui->sld_clus_mn_size->value(), ui->sld_clus_mx_size->value()}};
     ProcessChain();
     ui->btn_apply->setEnabled(false);
 }
