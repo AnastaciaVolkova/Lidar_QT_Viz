@@ -245,7 +245,6 @@ void MainWindow::ProcessChain(){
     } else {
         renderPointCloud(cloud_to_display, ui->le_input->text().toStdString(), color_to_display);
     }
-    ui->btn_apply->setEnabled(false);
 }
 
 void MainWindow::SetDirectories(){
@@ -284,6 +283,7 @@ void MainWindow::SetButtonStage(QList<QMap<QString, QWidget*>>::iterator i){
     }
 
     ProcessChain();
+    ui->btn_apply->setEnabled(false);
 }
 
 void MainWindow::on_sld_min_x_valueChanged()
@@ -346,6 +346,7 @@ void MainWindow::on_sld_clus_mx_size_valueChanged(int value){
 void MainWindow::on_btn_apply_clicked()
 {
     ProcessChain();
+    ui->btn_apply->setEnabled(false);
 }
 
 void MainWindow::UpdatePCL(){
