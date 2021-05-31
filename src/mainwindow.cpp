@@ -58,10 +58,6 @@ MainWindow::MainWindow(QWidget *parent)
         {ui->sld_max_iter->value(), ui->sld_dist_thr->value()},
         {ui->sld_clus_res->value(), ui->sld_clus_mn_size->value(), ui->sld_clus_mx_size->value()}};
 
-    if (ui->chkbox_show_intensity->isChecked())
-        renderPointCloud();
-    else
-        ProcessChain();
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(UpdatePCL()));
     timer_->start(1000);
@@ -366,5 +362,8 @@ void MainWindow::on_btn_apply_clicked()
 }
 
 void MainWindow::UpdatePCL(){
-    qDebug() << "Hello";
+    if (ui->chkbox_show_intensity->isChecked())
+        renderPointCloud();
+    else
+        ProcessChain();
 };
