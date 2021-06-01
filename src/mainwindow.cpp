@@ -60,7 +60,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     timer_ = new QTimer(this);
     connect(timer_, SIGNAL(timeout()), this, SLOT(UpdatePCL()));
-    timer_->start(1000);
+    timer_->start(100);
 }
 
 MainWindow::~MainWindow()
@@ -80,6 +80,7 @@ void MainWindow::on_btn_input_pressed()
                                                          tr("Choose pcd file"),
                                                          file_dir, tr("Point cloud data (*.pcd)"));
         ui->le_input->setText(file_name);
+        stream_.push_back(file_name.toStdString());
 
     } else {
         if (!file_info.exists())
@@ -91,8 +92,10 @@ void MainWindow::on_btn_input_pressed()
         ui->le_input->setText(directory);
         stream_ = pcl_processor_->streamPcd(directory.toStdString());
     }
-    cloud_ = pcl_processor_->loadPcd(ui->le_input->text().toStdString());
-
+    stream_it_ = stream_.begin();
+    cloud_ = pcl_processor_->loadPcd(stream_it_++->string());
+    if (stream_it_ == stream_.end())
+        stream_it_ = stream_.begin();
     renderPointCloud();
 }
 
@@ -110,10 +113,23 @@ void MainWindow::on_chkbox_show_intensity_toggled(bool checked)
 
 void MainWindow::on_rbtn_is_multi_toggled(bool checked)
 {
-    if (checked)
+    timer_->stop();
+    stream_.clear();
+    if (checked){
         ui->le_input->setText(default_directory_);
-    else
+        stream_ = pcl_processor_->streamPcd(default_directory_.toStdString());
+    }
+    else{
         ui->le_input->setText(default_pcd_file_);
+        stream_.push_back(default_pcd_file_.toStdString());
+    }
+    stream_it_ = stream_.begin();
+    cloud_ = pcl_processor_->loadPcd(stream_it_++->string());
+    if (stream_it_ == stream_.end())
+        stream_it_ = stream_.begin();
+
+    renderPointCloud();
+    timer_->start(100);
 }
 
 void MainWindow::on_rbtn_clust_pcl_toggled(bool checked)
@@ -362,6 +378,9 @@ void MainWindow::on_btn_apply_clicked()
 }
 
 void MainWindow::UpdatePCL(){
+    cloud_ = pcl_processor_->loadPcd(stream_it_++->string());
+    if (stream_it_ == stream_.end())
+        stream_it_ = stream_.begin();
     if (ui->chkbox_show_intensity->isChecked())
         renderPointCloud();
     else
